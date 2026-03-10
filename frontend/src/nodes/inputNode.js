@@ -3,7 +3,7 @@ import { BaseNode } from "./BaseNode";
 
 export const InputNode = ({ id, data }) => {
   const [name, setName] = useState(
-    data?.name || `input${id.replace(/\D/g, "")}`
+    data?.name || `input_${id.split('-')[0]}`,
   );
 
   const [inputType, setInputType] = useState(data?.inputType || "text");

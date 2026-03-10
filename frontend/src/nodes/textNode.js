@@ -38,10 +38,10 @@ export const TextNode = ({ id, data }) => {
   }, [content]);
 
   const variables = useMemo(() => {
-    return nodes
-      .filter((n) => n.type === "customInput")
-      .map((n) => n.data.name);
-  }, [nodes]);
+    const matches = [...content.matchAll(/{{\s*([a-zA-Z_$][\w$]*)\s*}}/g)];
+    const unique = [...new Set(matches.map((m) => m[1]))];
+    return unique;
+  }, [content]);
 
   const variableHandles = useMemo(
     () =>
@@ -58,7 +58,7 @@ export const TextNode = ({ id, data }) => {
   // update reactflow internals whenever variables change
   useEffect(() => {
     updateNodeInternals(id);
-  }, [id, variables.length, updateNodeInternals]);
+  }, [id, variables, updateNodeInternals]);
 
   const handleChange = (e) => {
     const value = e.target.value;

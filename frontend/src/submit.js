@@ -1,10 +1,15 @@
 import axios from "axios";
 import { useStore } from "./store";
+import toast from "react-hot-toast";
 
 export const submitPipeline = async () => {
   const { nodes, edges } = useStore.getState();
 
   try {
+    if (nodes.length === 0) {
+      toast.error("Pipeline is empty. Add some nodes first!");
+      return;
+    }
     const response = await axios.post(
       "http://localhost:8000/pipelines/parse",
       {
@@ -21,15 +26,19 @@ export const submitPipeline = async () => {
 
     const { num_nodes, num_edges, is_dag } = response.data;
 
-    alert(
-      `Pipeline Parsed Successfully\n\n` +
-        `Total Nodes: ${num_nodes}\n` +
-        `Total Edges: ${num_edges}\n` +
-        `Is DAG: ${is_dag ? "Yes" : "No"}`,
-    );
+    toast.success((t) => (
+      <div className="flex flex-col gap-1 text-sm">
+        <p className="font-semibold">Pipeline Parsed Successfully!</p>
+        <p>Total Nodes: {num_nodes}</p>
+        <p>Total Edges: {num_edges}</p>
+        <p>Is DAG: {is_dag ? "Yes ✅" : "No ❌"}</p>
+      </div>
+    ));
   } catch (error) {
     console.error("Pipeline submit failed:", error);
-    alert("Failed to submit pipeline");
+    const errorMessage =
+      error.response?.data?.detail || "Failed to submit pipeline";
+    toast.error(errorMessage);
   }
 };
 

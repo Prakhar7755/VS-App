@@ -21,6 +21,35 @@ const VARIANT_STYLES = {
     glow: "shadow-[0_0_0_1px_rgba(167,139,250,0.15)]",
     accent: "text-violet-300",
   },
+  boolean: {
+    border: "border-l-[3px] border-yellow-400",
+    glow: "shadow-[0_0_0_1px_rgba(250,204,21,0.15)]",
+    accent: "text-yellow-300",
+  },
+
+  concat: {
+    border: "border-l-[3px] border-indigo-400",
+    glow: "shadow-[0_0_0_1px_rgba(99,102,241,0.15)]",
+    accent: "text-indigo-300",
+  },
+
+  condition: {
+    border: "border-l-[3px] border-orange-400",
+    glow: "shadow-[0_0_0_1px_rgba(251,146,60,0.15)]",
+    accent: "text-orange-300",
+  },
+
+  delay: {
+    border: "border-l-[3px] border-pink-400",
+    glow: "shadow-[0_0_0_1px_rgba(244,114,182,0.15)]",
+    accent: "text-pink-300",
+  },
+
+  number: {
+    border: "border-l-[3px] border-teal-400",
+    glow: "shadow-[0_0_0_1px_rgba(45,212,191,0.15)]",
+    accent: "text-teal-300",
+  },
 };
 
 export const BaseNode = ({ title, variant, children, handles = [] }) => {
@@ -42,19 +71,28 @@ export const BaseNode = ({ title, variant, children, handles = [] }) => {
     >
       {/* REACT FLOW KE HANDLES */}
       {handles.map((h) => (
-        <Handle
-          key={h.id}
-          id={h.id}
-          type={h.type}
-          position={h.position}
-          style={{
-            width: 12,
-            height: 12,
-            background: "#6366f1",
-            border: "2px solid white",
-            ...h.style,
-          }}
-        />
+        <div key={h.id}>
+          <Handle
+            id={h.id}
+            type={h.type}
+            position={h.position}
+            style={{
+              width: 12,
+              height: 12,
+              background: "#6366f1",
+              border: "2px solid white",
+              ...h.style,
+            }}
+          />
+          {h.label && (
+            <span
+              className="absolute text-[10px] text-gray-400"
+              style={{ top: (h.style?.top || 0) - 6, left: -40 }}
+            >
+              {h.label}
+            </span>
+          )}
+        </div>
       ))}
 
       {/* HEADER */}

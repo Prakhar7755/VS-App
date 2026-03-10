@@ -1,25 +1,14 @@
 import { DraggableNode } from "./draggableNode";
+import { nodeLibrary } from "./nodeConfig";
 
 export const PipelineToolbar = () => {
-  const nodes = [
-    { type: "customInput", label: "Input" },
-    { type: "llm", label: "LLM" },
-    { type: "customOutput", label: "Output" },
-    { type: "text", label: "Text" },
-    { type: "boolean", label: "Boolean" },
-    { type: "concat", label: "Concat" },
-    { type: "condition", label: "Condition" },
-    { type: "delay", label: "Delay" },
-    { type: "number", label: "Number" },
-  ];
-
   return (
     <div className="p-4 bg-gradient-to-b from-gray-900 via-gray-950 to-gray-900 rounded-2xl shadow-inner">
       <h3 className="text-gray-100 font-semibold mb-3 text-sm tracking-wide">
         Node Library
       </h3>
       <div className="flex flex-wrap gap-3">
-        {nodes.map((node) => (
+        {nodeLibrary.map((node) => (
           <div
             key={node.type}
             className="
